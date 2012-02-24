@@ -12,50 +12,40 @@ import java.util.regex.Pattern
 
 object Test {
   def main(args: Array[String]): Unit = {
-    val csv    = readFile("../name-compare/imena.csv")
-    val parsedList  = parseCsv(csv)
-    val countNames  = parsedList.size
-    val optParsList = optimizedList(parsedList.tail.take(300))
+    val nameList  = getNameList("../name-compare/imena.csv")
+    val cleanedNameList = cleanNameList(nameList.tail)
 
+    val similarityMethod = new Levenshtein
+    val start = System.currentTimeMillis()
+    val res = getFullMatchNames(new Levenshtein, cleanedNameList, 0.75f, 0.75f)
 
-//    matchNames(new Levenshtein, optParsList)//ok
-//    getMatchedNames(new Levenshtein, optParsList, 0.7f) foreach println
-////    matchNames(new ChapmanOrderedNameCompoundSimilarity, optParsList)//ok
-//    getMatchedNames(new ChapmanOrderedNameCompoundSimilarity, optParsList, 0.7f) foreach println
-////    matchNames(new Jaro, optParsList)//bzvz
-//    getMatchedNames(new Jaro, optParsList, 0.7f) foreach println
-////    matchNames(new NeedlemanWunch, optParsList)//ok
-//    getMatchedNames(new NeedlemanWunch, optParsList, 0.7f) foreach println
-////    matchNames(new SmithWatermanGotoh, optParsList)//ok je
-//    getMatchedNames(new SmithWatermanGotoh, optParsList, 0.7f) foreach println
-////    matchNames(new SmithWatermanGotohWindowedAffine, optParsList)//ok je
-//    getMatchedNames(new SmithWatermanGotohWindowedAffine, optParsList, 0.7f) foreach println
-
-
-  }
-  def getMatchedNames(similarityMethod: AbstractStringMetric, names: Seq[String], correlationMin: Float) = {
-    val res = testSimilarity(similarityMethod, names)
-    res.map( e => (e._1, e._2.filter(_._1 > correlationMin)))
-  }
-  def matchNames(similarityMethod: AbstractStringMetric, names: Seq[String]){
-    println("%s similarity check: \n" format similarityMethod.getShortDescriptionString)
-    val res = testSimilarity(similarityMethod, names)
     res foreach println
-    println("")
-  }
-  def readFile(fullPath: String) = Source.fromFile(new File(fullPath)).mkString
-
-  def parseCsv(csv: String)      = csv.split("\n").toList
-
-  private def testSimilarity(similarityMethod: AbstractStringMetric, names: Seq[String]) = {
-    val simList = names.map( e => (e, names.map( j => (similarityMethod.getSimilarity( e, j) -> j))))
-    val simListSorted = simList.map( e => (e._1, e._2.sortWith((i, j) => i._1 > j._1)))
-    simListSorted
+    println("Elapsed milliseconds: %s" format System.currentTimeMillis()- start)
   }
 
-  //def matchByNameAndSurname
-  def optimizedList(list: Seq[String]) = {
-    list.map( name => removeDiacritics(name.trim().toLowerCase.replace("\"","").replace(","," ")))
+  def getFullMatchNames(similarityMethod: AbstractStringMetric, list: List[List[String]], minNameCorr: Float, minSurnameCorr: Float) = {
+    val nameList = getPartialMatchNames(new Levenshtein, list, minNameCorr)
+    val plainNameList = nameList.map(e => e._1 -> e._2.map(_._2))
+    val matchSurnames = plainNameList.map(e => (List(e._1) -> e._2.map(x => (similarityMethod.getSimilarity(e._1._2, x._2), x))))
+    val fullMatchList = matchSurnames.map( e => (e._1, e._2.sortWith((i, j) => i._1 > j._1).filter(_._1 > minSurnameCorr)))
+    fullMatchList.filter(_._2.length > 2)//we filter only the names which have similar ones in the list
+  }
+
+  def getNameList(fullPath: String) = {
+    parseCsv(readCsv(fullPath))
+  }
+
+  private def getPartialMatchNames(similarityMethod: AbstractStringMetric, names: List[List[String]], minCorrelation: Float) = {
+    val simList = names.map( e => ((e.head, e.last), names.map( j => (similarityMethod.getSimilarity( e.head, j.head) -> (j.head, j.last)))))
+    simList.map(e => (e._1, e._2.sortWith((x, y) => x._1 > y._1).filter(_._1 > minCorrelation)))
+  }
+
+  private def readCsv(fullPath: String) = Source.fromFile(new File(fullPath)).mkString
+
+  private def parseCsv(csv: String) = csv.split("\n").toList.map(name => name.split(",").toList)
+
+  private def cleanNameList(list: List[List[String]]) = {
+    list.map( fullname => fullname.map(name => removeDiacritics(name.trim().toLowerCase)))//replaceAll("\\W", "")
   }
 
   //Jedino đ ne miče i valjda slična slova koja se ne sastoje od 2 dijela
