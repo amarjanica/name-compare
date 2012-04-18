@@ -1,6 +1,6 @@
-organization := "hr.element.nc"
+organization := "hr.element.etb"
 
-name         := "name-compare"
+name         := "etb-name_compare"
 
 version      := "0.0.1"
 
@@ -9,13 +9,10 @@ version      := "0.0.1"
 
 resolvers := Seq("Element Nexus" at "http://maven.element.hr/nexus/content/groups/public/")
 
-libraryDependencies += "org.scalatest" %% "scalatest" % "1.7.1" % "test"
+libraryDependencies += "com.ibm.icu" % "icu4j" % "49.1"
 
 libraryDependencies += "uk.ac.shef.wit.simmetrics" % "simmetrics" % "1.6.2"
 
-crossScalaVersions := Seq("2.9.1", "2.9.0-1", "2.9.0")
-
-scalaVersion <<= (crossScalaVersions)(_.head)
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "UTF-8", "-optimise")
 
@@ -27,4 +24,4 @@ unmanagedSourceDirectories in Test    <<= (scalaSource in Test   )( _ :: Nil)
 
 // ### Misc ###
 
-initialCommands := "import hr.element.doit.csv._"
+//initialCommands := "import hr.element.doit.csv._"
