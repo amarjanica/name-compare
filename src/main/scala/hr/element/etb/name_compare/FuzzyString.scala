@@ -11,11 +11,6 @@ import java.util.regex.Pattern
 import uk.ac.shef.wit.simmetrics._
 import uk.ac.shef.wit.simmetrics.similaritymetrics.Levenshtein
 import com.ibm.icu.text.Transliterator
-/*
- * REDOSLIJED NIJE BITAN
- * CASE-OVE I LITERALSE ZANEMARIT
- * APOSTROFI I CRTICE NISU BITNI
- */
 
 object FuzzyString {
 
@@ -24,6 +19,7 @@ object FuzzyString {
   private val Trans = Transliterator.getInstance("Latin-ASCII")
 
   private val splitPattern = """\s+"""
+
 
   def compareTwoNames(name1: String, name2: String): Float = {
 
@@ -38,6 +34,22 @@ object FuzzyString {
     compareList.sum/compareList.length
 
   }
+
+
+  def findAllNameMatchList(nameList: Seq[String], p: Float): Seq[Map[Float, String]]=
+  {
+    nameList.map(name1 =>
+      nameList.map(name2 => (compareTwoNames(name1, name2) -> name2)).filter(_._1 >= p).sortWith((max, min) => max._1 > min._1).toMap
+    )
+  }
+
+
+  def findNameMatchList(name: String, nameList: Seq[String], p: Float): Map[Float, String] = {
+    nameList map{
+      n => (compareTwoNames(name, n), n)
+    } filter (_._1 >= p) sortWith((max, min) => max._1 > min._1) toMap
+  }
+
 
   protected val trimWhiteSpace =  (splitPattern r) replaceAllIn (_: String, " ")
 
