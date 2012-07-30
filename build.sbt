@@ -2,7 +2,7 @@ organization := "hr.element.etb"
 
 name         := "etb-name_compare"
 
-version      := "0.0.1"
+version      := "0.0.3"
 
 
 // ### Build settings ###
