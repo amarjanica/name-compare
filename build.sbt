@@ -7,7 +7,10 @@ version      := "0.0.1"
 
 // ### Build settings ###
 
-resolvers := Seq("Element Nexus" at "http://maven.element.hr/nexus/content/groups/public/")
+resolvers := Seq(
+  "Element Nexus" at "http://maven.element.hr/nexus/content/groups/public/"
+, "Element Releases" at "http://maven.element.hr/nexus/content/repositories/releases/"
+)
 
 resolvers := Seq("3rd party" at "http://maven.element.hr/nexus/content/repositories/thirdparty/")
 
@@ -24,8 +27,9 @@ unmanagedSourceDirectories in Compile <<= (scalaSource in Compile)( _ :: Nil)
 
 unmanagedSourceDirectories in Test    <<= (scalaSource in Test   )( _ :: Nil)
 
+publishTo <<= resolvers { _.lastOption }
 
-
+credentials += Credentials(Path.userHome / ".publish" / "element.credentials")
 // ### Misc ###
 
 //initialCommands := "import hr.element.doit.csv._"
