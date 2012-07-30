@@ -9,9 +9,11 @@ version      := "0.0.1"
 
 resolvers := Seq("Element Nexus" at "http://maven.element.hr/nexus/content/groups/public/")
 
+resolvers := Seq("3rd party" at "http://maven.element.hr/nexus/content/repositories/thirdparty/")
+
 libraryDependencies += "com.ibm.icu" % "icu4j" % "49.1"
 
-libraryDependencies += "uk.ac.shef.wit.simmetrics" % "simmetrics" % "1.6.2"
+libraryDependencies += "uk.ac.shef.wit" % "simmetrics" % "1.6.2"
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "1.7.1" % "test"
 

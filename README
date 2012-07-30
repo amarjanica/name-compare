@@ -1,0 +1,18 @@
+   
+    FUZZY STRING MATCHING   
+
+
+ *  FuzzyMatch.apply is a method for comparing 2 names, that uses Levenshtein algorithm.
+ *  The Levenshtein algorithm (also called Edit-Distance) calculates the
+ *  least number of edit operations that are necessary to modify one string to obtain another string.
+ *
+ *  Method FuzzyMatch.apply returns 0 to 1 correlation between 2 names.
+ *
+ *  Names, that are used for fuzzy matching previously are:
+ *
+ *  1. Transliterated
+ *  2. Alphabetically sorted
+ *  3. Converted to lowercase and trimmed for extra whitespaces
+
+
+
