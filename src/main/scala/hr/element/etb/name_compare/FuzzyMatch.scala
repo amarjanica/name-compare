@@ -1,6 +1,5 @@
 package hr.element.etb.name_compare
 
-
 import uk.ac.shef.wit.simmetrics.similaritymetrics.Levenshtein
 
 /*
@@ -18,7 +17,6 @@ import uk.ac.shef.wit.simmetrics.similaritymetrics.Levenshtein
  *
  */
 object FuzzyMatch {
-
   def apply(name1: String, name2: String): Float = {
     (new Levenshtein).getSimilarity(
         FuzzyString(name1),

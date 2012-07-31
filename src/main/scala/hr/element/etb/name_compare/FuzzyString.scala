@@ -1,7 +1,6 @@
 package hr.element.etb
 package name_compare
 
-
 import com.ibm.icu.text.Transliterator
 
 object FuzzyString {
@@ -9,17 +8,15 @@ object FuzzyString {
 
   def apply(s: String) = {
     val sanitizedName = (transliterate andThen lowerCase andThen trimWhiteSpace)(s)
-    println("sanitized: " + sanitizedName)
-    val sortedName    = sanitizedName split " " sortWith sortAsc
+    val sortedName    = sanitizedName split ' ' sortWith sortAsc
     sortedName mkString " "
   }
 
-
   private val splitPattern = """\s{2,}"""
 
-  private def sortAsc(e1: String, e2: String) = (e1 compareToIgnoreCase e2) > 0 //ASC
+  private def sortAsc(e1: String, e2: String) = (e1 compareToIgnoreCase e2) > 0 // ASC
 
-  protected val trimWhiteSpace =  (splitPattern r) replaceAllIn (_: String, " ")
+  protected val trimWhiteSpace = (splitPattern r) replaceAllIn (_: String, " ")
 
   protected val lowerCase = (_: String).toLowerCase
 
@@ -27,5 +24,4 @@ object FuzzyString {
 
   def transText(text: String, splitPattern: String) =
     (lowerCase andThen transliterate andThen trimWhiteSpace) (text)
-
 }
