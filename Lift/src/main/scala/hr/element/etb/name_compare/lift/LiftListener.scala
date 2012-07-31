@@ -2,6 +2,7 @@ package hr.element.etb
 package name_compare
 package lift
 
+import hr.element.etb.name_compare.api._
 //import elements.ApiParamsData
 
 import net.liftweb.http._
@@ -25,7 +26,7 @@ object LiftListener extends RestHelper {
       println("Header: %s" format req.headers)
       println("Body: %s" format req.body)
       val resp = "DINAMO"
-      PlainTextResponse(src + dst)
+      PlainTextResponse(FuzzyMatch.apply(src, dst) toString)
   }
 
 

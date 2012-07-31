@@ -1,4 +1,4 @@
-package hr.element.etb.name_compare
+package hr.element.etb.name_compare.api
 
 import uk.ac.shef.wit.simmetrics.similaritymetrics.Levenshtein
 

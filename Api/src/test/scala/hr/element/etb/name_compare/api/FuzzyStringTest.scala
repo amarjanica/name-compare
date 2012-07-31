@@ -1,5 +1,4 @@
-package hr.element.etb
-package name_compare
+package hr.element.etb.name_compare.api
 
 import org.scalatest.matchers.MustMatchers
 import org.scalatest.FeatureSpec

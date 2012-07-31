@@ -21,6 +21,7 @@ object Lift extends Build {
     , dispatch
   ),
   Seq(
+    Api.root
     )
   ) settings (
     webSettings ++ Seq (
