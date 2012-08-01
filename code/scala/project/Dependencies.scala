@@ -11,9 +11,9 @@ object Dependencies {
     "org.scala-tools.time" % "time_2.9.1" % "0.5"
   )
 
-  // Transliteration  
+  // Transliteration
   val icu4j = "com.ibm.icu" % "icu4j" % "49.1"
-  
+
   // String comparisons
   val simmetrics = "uk.ac.shef.wit" % "simmetrics" % "1.6.2"
 
