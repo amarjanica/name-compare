@@ -2,24 +2,67 @@ package hr.element.etb.name_compare.api
 
 import uk.ac.shef.wit.simmetrics.similaritymetrics.Levenshtein
 
-/*
- *  The following method of comparing names uses Levenshtein algorithm.
- *  The Levenshtein algorithm (also called Edit-Distance) calculates the
- *  least number of edit operations that are necessary to modify one string to obtain another string.
- *
- *  Method FuzzyMatch.apply returns 0 to 1 correlation between 2 names.
- *
- *  Names, that are used for fuzzy matching previously are:
- *
- *  1. Transliterated
- *  2. Alphabetically sorted
- *  3. Converted to lowercase and trimmed for extra whitespaces
- *
- */
 object FuzzyMatch {
-  def apply(name1: String, name2: String): Float = {
-    (new Levenshtein).getSimilarity(
-        FuzzyString(name1),
-        FuzzyString(name2))
+  private val SplitPattern = """\s+"""r
+}
+
+case class FuzzyMatch(
+    private val _src: String
+  , private val _dst: String
+  , decisionTreshold: Float
+  , transliterize: Boolean) {
+
+  import FuzzyMatch._
+
+  val src = if (transliterize) FuzzyString(_src) else _src
+  val dst = if (transliterize) FuzzyString(_dst) else _dst
+
+  lazy val percentage =
+	new Levenshtein getSimilarity(src, dst)
+
+  sealed abstract class Decision(method: String) {
+    override val toString = "%s (%s: %.0f%%)" format(
+        getClass.getSimpleName,
+        method,
+        percentage * 100
+      )
   }
+
+  case class Yes(method: String) extends Decision(method)
+  case class Maybe(method: String) extends Decision(method)
+  case class No(method: String) extends Decision(method)
+
+  lazy val result = {
+    if (percentage >= decisionTreshold) {
+      Yes("Direct match found")
+    }
+    else {
+      checkInitials()
+    }
+  }
+
+  private def checkInitials() = {
+    if(dst contains '.') {
+      val namesList = SplitPattern split src
+
+      val initialsList = for {
+        n <- namesList
+        if n.nonEmpty
+      } yield n.head + "."
+
+      val srcNames = namesList ++ initialsList toSet
+      val dstNames = SplitPattern split dst toSet
+
+      if (dstNames.forall(srcNames)) {
+        Maybe("Initials were matched")
+      }
+      else {
+        No("Initials did not match")
+      }
+    } else {
+      No("Direct match not found")
+    }
+  }
+
+  override lazy val toString = result.toString
 }
