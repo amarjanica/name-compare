@@ -10,7 +10,8 @@ case class FuzzyMatch(
     private val _src: String
   , private val _dst: String
   , decisionTreshold: Float
-  , transliterize: Boolean) {
+  , transliterize: Boolean
+  , initialsOption: Boolean) {
 
   import FuzzyMatch._
 
@@ -18,7 +19,7 @@ case class FuzzyMatch(
   val dst = if (transliterize) FuzzyString(_dst) else _dst
 
   lazy val percentage =
-	new Levenshtein getSimilarity(src, dst)
+    new Levenshtein getSimilarity(src, dst)
 
   sealed abstract class Decision(method: String) {
     override val toString = "%s (%s: %.0f%%)" format(
@@ -27,7 +28,6 @@ case class FuzzyMatch(
         percentage * 100
       )
   }
-
   case class Yes(method: String) extends Decision(method)
   case class Maybe(method: String) extends Decision(method)
   case class No(method: String) extends Decision(method)
@@ -36,8 +36,12 @@ case class FuzzyMatch(
     if (percentage >= decisionTreshold) {
       Yes("Direct match found")
     }
-    else {
+    else if (initialsOption){
       checkInitials()
+    }
+    else
+    {
+      No("Direct match not found")
     }
   }
 
