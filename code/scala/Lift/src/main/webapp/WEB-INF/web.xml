@@ -8,7 +8,7 @@
     <filter-class>net.liftweb.http.LiftFilter</filter-class>
     <init-param>
       <param-name>bootloader</param-name>
-      <param-value>hr.element.etb.name_compare.lift.Boot</param-value>
+      <param-value>com.instantor.ip.sandbox.name_compare.Boot</param-value>
     </init-param>
   </filter>
   <filter-mapping>

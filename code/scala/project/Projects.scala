@@ -6,8 +6,9 @@ import Dependencies._
 
 object Projects extends Build {
   lazy val core = project(
-    "Core"
-  , "0.0.1"
+    "name-compare"
+  , "0.1.0-SNAPSHOT"
+  , "Core"
   , Seq(
       icu4j
     , simmetrics
@@ -16,8 +17,9 @@ object Projects extends Build {
   )
 
   lazy val lift = project(
-    "Lift"
-  , "0.0.1"
+    "name-compare-web"
+  , "0.0.0"
+  , "Lift"
   , Seq(
       jetty
     , liftWebkit

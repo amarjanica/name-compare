@@ -3,10 +3,6 @@ import Keys._
 
 import Dependencies._
 
-// Web plugin
-import com.github.siasia.WebPlugin._
-import com.github.siasia.PluginKeys._
-
 object Default {
   //Dependency report plugin
   import com.micronautics.dependencyReport.DependencyReport._
@@ -19,10 +15,14 @@ object Default {
       organization := "com.instantor.ip"
     , crossScalaVersions := Seq("2.9.2", "2.9.1-1", "2.9.1", "2.9.0-1", "2.9.0")
     , scalaVersion <<= (crossScalaVersions) { versions => versions.head }
-    , scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "UTF-8", "-optimise", "-Yrepl-sync")
+    , scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "UTF-8", "-optimise")
     , unmanagedSourceDirectories in Compile <<= (scalaSource in Compile)( _ :: Nil)
     , unmanagedSourceDirectories in Test <<= (scalaSource in Test)( _ :: Nil)
     )
+
+  // Web plugin
+  import com.github.siasia.WebPlugin._
+  import com.github.siasia.PluginKeys._
 
   // Coffeescript plugin
   import coffeescript.Plugin._
@@ -57,13 +57,14 @@ object Helpers {
   def project(
       title: String
     , ver: String
+    , path: String
     , deps: Seq[Seq[String => ModuleID]] = Seq()
     , projectDeps: Seq[ClasspathDep[ProjectReference]] = Seq()) =
     Project(
       title
-    , file(title.replace('-', '/'))
+    , file(path)
     , settings = Default.settings ++ Seq(
-        name    := "IP-" + title
+        name := title
       , version := ver
       , libraryDependencies <++= scalaVersion( sV =>
           for (depSeq <- deps; dep <- depSeq) yield dep(sV)
@@ -74,12 +75,14 @@ object Helpers {
   def project(
       title: String
     , ver: String
+    , path: String
     , deps: Seq[Seq[String => ModuleID]]
     , projectDeps: Seq[ClasspathDep[ProjectReference]]
     , jettyPort: Int
     , warName: String): Project = project(
         title
       , ver
+      , path
       , deps
       , projectDeps
       ) settings(

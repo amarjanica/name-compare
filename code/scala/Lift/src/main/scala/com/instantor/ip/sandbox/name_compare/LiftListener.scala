@@ -1,6 +1,5 @@
-package hr.element.etb
+package com.instantor.ip.sandbox
 package name_compare
-package lift
 
 import hr.element.etb.name_compare.api._
 import net.liftweb.http._
