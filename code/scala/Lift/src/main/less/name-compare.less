@@ -1,0 +1,159 @@
+/* Twotter Bootstrap 2.0.4 */
+// Main Bootstrap loader
+
+@import "../../../../../shared/bootstrap/bootstrap.less";
+
+// Form list patterns
+@import "../../../../../shared/bootstrap/formlists.less";
+
+// Platform-general styling
+@import "../../../../../shared/bootstrap/platform.less";
+
+@baseColor: @green; // Set a base color
+@import "../../../../../shared/bootstrap/color.less";
+
+
+/* ========================================================================== */
+/* =====  Name-Compare LESS  ================================================ */
+/* ========================================================================== */
+
+/* ----- tha workz ---------------------------------------------------------- */
+
+body {
+  background-color: @white;
+  background-repeat: repeat;
+  background-position: left center;
+  .background-source('textures/diagonal-noise.png');
+  //#gradient.vertical(@white, @grayLighter);
+}
+
+#marked {
+  background-color: lighten(@analog1, 40%);
+  text-shadow: 1px 1px 0 fadeout(@white, 50%);
+
+  .alter { background-color: lighten(@analog2, 40%); }
+}
+
+.label {
+  cursor: default;
+
+  &.success { .label-success; }
+  &.error { .label-important; }
+  &.warning { .label-warning; }
+}
+
+.hidden { display: none; }
+
+.actions {
+  &.bare {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    border: none;
+    background: none;
+  }
+
+  &.clean {
+    margin-top: 0;
+    margin-bottom: 0;
+    border: none;
+    background: none;
+  }
+
+  &.master-actions {
+    border-top: 1px solid @grayLight;
+    margin-top: 2 * @gridGutterWidth;
+  }
+}
+
+select {
+  option.added {
+    color: @complement;
+  }
+}
+
+#inputta {
+  .btn;
+  .btn-primary;
+
+  &:hover { color: @white; }
+}
+
+/* ----- some specifics ------------------------------------------- */
+@spacing: -20px;
+
+.sprite-position(@offset){
+  background-position: @offset * @spacing @offset * @spacing;
+}
+.background-source(@file){
+  background-image: url('@{resourcesPath}images/@{file}');
+}
+.icon {
+  height: 16px;
+  padding-left: 20px;
+  background-repeat: no-repeat;
+
+  &.zoom { .background-source('zoom.png'); }
+}
+
+.btn.smaller {
+  padding: 5px 9px;
+  font-size: 11px;
+  position: relative;
+  top: -2px;
+}
+
+.head-centered {
+  thead {
+    th { text-align: center;  }
+  }
+}
+
+/* ----- API docs ----------------------------------------------------------- */
+
+#apidoc {
+  h2 { .underlined; }
+  h3 { margin-bottom: 1px dotted @grayLighter; }
+
+  p { margin-bottom: 2 * @gridGutterWidth; }
+}
+
+/* ----- Scorecard sprites -------------------------------------------------- */
+
+.scorecard-excel {
+  display: inline-block;
+  width: 64px;
+  height: 64px;
+  background-position: left top;
+  background-repeat: no-repeat;
+  .background-source('scorecard-icons.png');
+
+  &.disabled { background-position: right top; }
+
+  &.elaborated {
+    background-position: left -64px;
+    &:hover { .disabled; }
+
+    &.disabled {
+      background-position: right -64px;
+    }
+  }
+
+  &.new {
+    background-position: left -128px;
+    &.disabled { background-position: right -128px; }
+    &:hover { .disabled; }
+
+    &.elaborated {
+      background-position: left -192px;
+      &.disabled { background-position: right -192px; }
+      &:hover { .disabled; }
+    }
+  }
+
+  &:hover { .disabled; }
+}
+
+
+.pullout { margin-left: -20px; }
