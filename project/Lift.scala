@@ -25,9 +25,9 @@ object Lift extends Build {
     )
   ) settings (
     webSettings ++ Seq (
-      port in container.Configuration := 9740,
+      port in container.Configuration := 9633,
       scanDirectories in Compile := Nil,
-      (artifactName in packageWar := "namedcompare.war")
+      (artifactName in packageWar := "name_compare.war")
     ): _*
   )
 }
