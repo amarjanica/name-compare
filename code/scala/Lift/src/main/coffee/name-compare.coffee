@@ -1,7 +1,11 @@
 $ ->
+  serverPath = 'https://'+window.location.host
   formRoot = $('#name-compare')
 
   formRoot.find('button.submit').click (e) ->
+    responseField = $('#response .result')
+    responseField.html 'Working&hellip;'
+
     out = []
     formRoot.find('input, textarea').each ->
       fieldName = $(@)[0].name
@@ -12,12 +16,12 @@ $ ->
 
     $.ajax
       type: 'post'
-      url: 'https://platform.instantor-local.com/sandbox/name-compare/api/send'
+      url: serverPath+'/sandbox/name-compare/api/send'
       data: JSON.stringify out
       success: (response) ->
         console.info response
       error: (response) ->
-        console.warn response
+        responseField.html '<span class="label label-important">Error '+response.status+': '+response.statusText+'</span>'
 
     false
 
