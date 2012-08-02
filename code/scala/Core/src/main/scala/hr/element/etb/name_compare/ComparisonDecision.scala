@@ -11,13 +11,20 @@ sealed abstract class ComparisonDecision(
   , description
   , percentage * 100
   )
-}
 
+  val dec = decision
+  val descr = description
+  val perc = percentage
+
+}
 case class DirectMatch(percentage: Float)
     extends ComparisonDecision("Yes", true, "There was a direct match", percentage)
 
 case class InitialsMatch(percentage: Float)
     extends ComparisonDecision("Maybe", true, "There was a match via initials", percentage)
+
+case class HyphenMatch(percentage: Float)
+    extends ComparisonDecision("Maybe", true, "There was a match via hyphens", percentage)
 
 case class NoMatch(percentage: Float)
     extends ComparisonDecision("No", false, "There was no match", percentage)

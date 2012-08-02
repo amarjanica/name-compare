@@ -1,5 +1,4 @@
 $ ->
-  serverPath = 'https://'+window.location.host
   formRoot = $('#name-compare')
 
   formRoot.find('button.submit').click (e) ->
@@ -16,10 +15,15 @@ $ ->
 
     $.ajax
       type: 'post'
-      url: serverPath+'/sandbox/name-compare/api/send'
-      data: JSON.stringify out
+      url: '/sandbox/name-compare/api'
+      data:
+        param: JSON.stringify out
       success: (response) ->
-        console.info response
+        data = response
+        console.log 'Length: ', data.length
+        console.log 'Type: ', typeof data
+        #for row in data
+          #console.log row
       error: (response) ->
         responseField.html '<span class="label label-important">Error '+response.status+': '+response.statusText+'</span>'
 

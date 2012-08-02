@@ -22,7 +22,7 @@ class Boot extends Bootable {
 
     LiftRules.addToPackages("com.instantor.ip.sandbox.name_compare")
 
-//    LiftRules.statelessDispatchTable.append(LiftListener)
+    LiftRules.statelessDispatchTable.append(LiftListener)
 
     LiftRules.early.append(_.setCharacterEncoding("UTF-8"))
 

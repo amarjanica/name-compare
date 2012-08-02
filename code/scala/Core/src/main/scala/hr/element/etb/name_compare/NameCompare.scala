@@ -35,8 +35,22 @@ case class NameCompare private(
     lazy val directPercentage =
       new Levenshtein getSimilarity(src.processed, dst.processed)
 
-    lazy val initialsPercentage =
-      new Levenshtein getSimilarity(src.processed, dst.processed)
+    lazy val initialsPercentage = {
+
+      val _src = src.processed
+      val _dst = dst.processed
+
+      val names = _src split " " toList
+
+     names.map{ name =>
+        val perms = (name.head + "." :: names.diff(List(name))).permutations toList
+
+        perms.map{ p =>
+          val permName = p mkString " "
+          new Levenshtein getSimilarity(permName, _dst)
+        }.max
+      }.max
+    }
 
     lazy val result =
       if (directPercentage >= directThreshold) {
