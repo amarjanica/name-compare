@@ -1,8 +1,10 @@
-package hr.element.etb.name_compare.api
+package hr.element.etb.name_compare.test
+import hr.element.etb.name_compare.NameCompare
+
+/*
 
 import org.scalatest._
 
-/*
 
 class FuzzyStringTest extends FeatureSpec with GivenWhenThen with MustMatchers{
   feature("name comparing") {

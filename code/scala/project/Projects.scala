@@ -33,7 +33,7 @@ object Projects extends Build {
         version := "0.1.0-SNAPSHOT"
       , organization := "hr.element.etb"
 
-      , crossScalaVersions := Seq("2.9.2", "2.9.1-1", "2.9.1", "2.9.0-1", "2.9.0")
+      //, crossScalaVersions := Seq("2.9.2", "2.9.1-1", "2.9.1", "2.9.0-1", "2.9.0")
       , unmanagedSourceDirectories in Test <<= (scalaSource in Test)(_ :: Nil)
 
       , resolvers := Seq(ElementNexus)
@@ -91,7 +91,7 @@ object Projects extends Build {
       , mini in (Compile, less) := true
       , resourceManaged in (Compile, less) <<= (webappResources in Compile)(_.get.head / ".." / "static" / "less-css")
       )
-  )
+  ) dependsOn(core)
 }
 
 // ============================================================================

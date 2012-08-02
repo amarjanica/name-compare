@@ -1,7 +1,7 @@
 package com.instantor.ip.sandbox
 package name_compare
 
-import hr.element.etb.name_compare.api._
+import hr.element.etb.name_compare._
 import net.liftweb.http._
 import rest._
 import net.liftweb.common.Full
