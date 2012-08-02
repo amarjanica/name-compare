@@ -17,7 +17,7 @@ from fabrils.projects import PROJECTS, delete_old, add_jetty_xml, remove_jetty_x
 
 from fabric.colors import red
 
-env.hosts = ['root@otto.ele-zlo.hr']
+env.hosts = ['root@deedee@instantor.com']
 
 def set_ws(host):
     env.hosts = [host]
