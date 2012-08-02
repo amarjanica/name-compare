@@ -9,14 +9,14 @@ import scala.sys.process._
 
 
 import hr.element.etb.lift.boot.Bouncer
-object NameCompareBouncer extends Bouncer("sandbox/name_compare")
+object NameCompareBouncer extends Bouncer("sandbox/name-compare")
 
 class Boot extends Bootable {
   def boot {
     NameCompareBouncer.init()
 
     LiftRules.setSiteMap(SiteMap(
-      Menu.i("test") / "test"
+      Menu.i("Test") / "test"
     ))
 
     LiftRules.addToPackages("com.instantor.ip.sandbox.name_compare")

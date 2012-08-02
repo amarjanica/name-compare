@@ -1,10 +1,11 @@
 package com.instantor.ip.sandbox
 package name_compare
+package snippet
 
 import hr.element.etb.lift.snippet._
 
 object SharedJS extends StaticJS {
-  override val root = "sandbox/shared"
+  override val root = "sandbox/name-compare/shared"
 
   override val defaultVersions = Map(
     "jquery"                             -> "1.7.2"
@@ -32,7 +33,7 @@ object SharedJS extends StaticJS {
 }
 
 object SharedCSS extends StaticCSS {
-  override val root = "sandbox/shared"
+  override val root = "sandbox/name-compare/shared"
 
   override val defaultVersions = Map(
     "jquery.fancybox"         -> "2.0.6"
