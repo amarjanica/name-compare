@@ -13,7 +13,7 @@ $ ->
     $.ajax
       type: 'post'
       url: 'https://platform.instantor-local.com/sandbox/name-compare/api/send'
-      data: out
+      data: JSON.stringify out
       success: (response) ->
         console.info response
       error: (response) ->
