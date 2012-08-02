@@ -8,3 +8,8 @@ target
 .target
 
 sbt-launch-*.jar
+
+*.log
+
+code/scala/Lift/src/main/static/coffee-js/*.js
+code/scala/Lift/src/main/static/less-css/*.css
