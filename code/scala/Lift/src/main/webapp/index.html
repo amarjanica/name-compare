@@ -6,33 +6,33 @@
     <form id="name-compare" class="form-horizontal">
       <fieldset>
         <div class="control-group">
-          <label class="control-label" for="fld_0">Direct treshold</label>
+          <label class="control-label" for="directTreshold">Direct treshold</label>
           <div class="controls">
-            <input type="text" id="fld_0" name="directTreshold" class="input span4" value="0.95"/>
+            <input type="text" id="directTreshold" name="directTreshold" class="input span1" value="95"/> %
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="fld_1">Initials treshold</label>
+          <label class="control-label" for="initialsTreshold">Initials treshold</label>
           <div class="controls">
-            <input type="text" id="fld_1" name="initialsTreshold" class="input span4" value="1.0" />
+            <input type="text" id="initialsTreshold" name="initialsTreshold" class="input span1" value="100" /> %
           </div>
         </div>
 
         <div class="control-group">
-          <label class="control-label" for="chk_0">Match initials</label>
+          <label class="control-label" for="initialsOption">&nbsp;</label>
           <div class="controls">
               <label class="checkbox">
-                <input type="checkbox" id="chk_0" name="initialsOption" value="option0" />
-                This is a checkbox
+                <input type="checkbox" id="initialsOption" name="initialsOption" value="Match initials" />
+                Match initials
               </label>
             </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="chk_1">Transliterate</label>
+          <label class="control-label" for="transliteralization">&nbsp;</label>
           <div class="controls">
               <label class="checkbox">
-                <input type="checkbox" id="chk_1" name="transliteralization" value="option1" />
-                This is a another checkbox
+                <input type="checkbox" id="transliteralization" name="transliteralization" value="Transliterate" />
+                Transliterate
               </label>
             </div>
         </div>
@@ -165,8 +165,32 @@ Hrvoje Horvat Hegedus,H. H.</textarea>
 
   <div id="response">
     <h3 class="underlined">Response</h3>
-    <div class="result muted">
-      No response.
+    <div class="results">
+      <div class="status muted">
+        No response.
+      </div>
+
+      <ul class="nav nav-tabs hide js-data-toggler">
+        <li class="active"><a href="#data-table">Table</a></li>
+        <li><a href="#data-text">List</a></li>
+      </ul>
+
+      <table id="data-table" class="table table-bordered table-striped cc-list head-centered hide js-resultlist">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Source name</th>
+            <th>Destination name</th>
+            <th>Response</th>
+            <th>Match %</th>
+            <th>Decision</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+
+      <textarea id="data-text" class="span12 hide js-resultlist" rows="5" cols="50"></textarea>
     </div>
   </div>
   <br/>
