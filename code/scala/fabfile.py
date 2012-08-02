@@ -57,7 +57,7 @@ def deploy(project = "", restart=False):
             if confirm(red("Do you wish to proceed?")):
                 upload(p)
          
-        shared_static_dir = static_dir + 'shared'
+        deploy_shared_static()
         # Restart jetty
         if confirm(red("Do you wish to restart jetty?")):
             sudo('service jetty restart')
@@ -68,6 +68,7 @@ def deploy(project = "", restart=False):
         prepare_deploy(project)
         if confirm(("Do you wish to proceed?")):
             upload(project)
+            deploy_shared_static()
 
 
             # Restart jetty
