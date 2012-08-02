@@ -74,7 +74,7 @@ object LiftListener extends RestHelper {
       } yield res
 
 
-      JsonResponse(compact(JsonAST.render(out)))
+      JsonResponse(out)
   }
 
   case class Params(
