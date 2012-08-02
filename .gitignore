@@ -10,6 +10,7 @@ target
 sbt-launch-*.jar
 
 *.log
+*.pyc
 
 code/scala/Lift/src/main/static/coffee-js/*.js
 code/scala/Lift/src/main/static/less-css/*.css
