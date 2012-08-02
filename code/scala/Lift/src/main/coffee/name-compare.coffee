@@ -12,8 +12,9 @@ $ ->
 
     $.ajax
       type: 'post'
-      url: 'https://platform.instantor-local.com/sandbox/name-compare/api/send'
-      data: JSON.stringify out
+      url: 'https://'+window.location.host+'/sandbox/name-compare/api'
+      data:
+        param: JSON.stringify out
       success: (response) ->
         console.info response
       error: (response) ->
