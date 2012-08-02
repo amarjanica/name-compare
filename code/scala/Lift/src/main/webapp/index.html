@@ -3,8 +3,40 @@
   <h3 class="underlined">Comparison form</h3>
 
   <div>
-    <form class="form-horizontal">
+    <form id="name-compare" class="form-horizontal">
       <fieldset>
+        <div class="control-group">
+          <label class="control-label" for="fld_0">Field 0</label>
+          <div class="controls">
+            <input type="text" id="fld_0" name="fld_0" class="input span4" />
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="fld_1">Field 1</label>
+          <div class="controls">
+            <input type="text" id="fld_1" name="fld_1" class="input span4" />
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label" for="chk_0">Check 0</label>
+          <div class="controls">
+              <label class="checkbox">
+                <input type="checkbox" id="chk_0" name="chk_0" value="option0" />
+                This is a checkbox
+              </label>
+            </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="chk_1">Check 1</label>
+          <div class="controls">
+              <label class="checkbox">
+                <input type="checkbox" id="chk_1" name="chk_1" value="option1" />
+                This is a another checkbox
+              </label>
+            </div>
+        </div>
+
         <div class="control-group">
           <label class="control-label" for="input_names">Input names</label>
           <div class="controls">
@@ -12,7 +44,7 @@
           </div>
         </div>
         <div class="form-actions">
-            <button class="btn btn-info submit" type="submit">Check names</button>
+            <button class="btn btn-info btn-large submit" type="submit">Check names</button>
         </div>
       </fieldset>
     </form>
