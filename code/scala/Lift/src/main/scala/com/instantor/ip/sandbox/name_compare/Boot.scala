@@ -16,7 +16,8 @@ class Boot extends Bootable {
     NameCompareBouncer.init()
 
     LiftRules.setSiteMap(SiteMap(
-      Menu.i("Test") / "test"
+        Menu.i("Name compare") / "index"
+      , Menu.i("Test") / "test"
     ))
 
     LiftRules.addToPackages("com.instantor.ip.sandbox.name_compare")

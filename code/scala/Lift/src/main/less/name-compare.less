@@ -1,4 +1,38 @@
 /* Twotter Bootstrap 2.0.4 */
 // Main Bootstrap loader
 
-@import "../../../../../../shared/bootstrap/2.0.4/bootstrap.less";
+@import '../../../../../../shared/bootstrap/2.0.4/bootstrap.less';
+
+// Platform-general styling
+@import '../../../../../../shared/bootstrap/platform/platform.less';
+
+@baseColor: @orange; // Set a base color
+@import '../../../../../../shared/bootstrap/color.less';
+
+
+/* ========================================================================== */
+/* =====   Name compare LESS   ============================================== */
+/* ========================================================================== */
+
+/* ----- tha workz ---------------------------------------------------------- */
+
+body {
+  background-color: @white;
+  background-repeat: repeat;
+  background-position: left center;
+  .background-source('textures/groovepaper.png');
+  //#gradient.vertical(@white, @grayLighter);
+}
+
+.hidden { display: none; }
+
+.spinner {
+  background-image: url('@{resourcesPath}images/loader-t.gif');
+  background-repeat: no-repeat;
+  background-position: right center;
+  padding-right: 22px;
+}
+
+
+
+
