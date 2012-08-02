@@ -1,56 +1,44 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:lift="http://liftweb.net/" lang="en-US">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:lift="http://liftweb.net/">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 
-<head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-  <title class="lift:Menu.title">GRUJ -</title>
+    <meta name="description" content="Instant Platform name compare sandbox tester" />
+    <meta name="keywords" content="instant,platform,name compare,tester,sandbox" />
 
-  <meta content="GRUJ, Scala, SBT, loader" name="keywords"/>
-  <meta content="GRUJ - GRand Unified Jarloader" name="description"/>
+    <title><span class="lift:Menu.title"/></title>
 
-  <meta content="Element d.o.o." name="author"/>
-  <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="/favicon.ico"/>
-
-  <link rel="stylesheet" type="text/css" href="/classpath/blueprint/screen.css"/>
-</head>
-
-<body>
-  <!-- CONTAINER START -->
-  <div class="container" id="container">
-
-    <!-- HEADER START -->
-    <div class="span-24 last" id="header">
-      <div id="logo" class="span-11 column last">
-        <h1 class="span-4">Name compare</h1>
+    <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="/favicon.ico"/>
+    <lift:GeneratedCSS name="name-compare"/>
+  </head>
+  <body>
+    <div class="container">
+      <div id="header" class="row span12">
+        <h1 class="span6 header">
+          <a href="/sandbox/name-compare">
+            <div id="instantplatform" class="logo instantplatform"><strong>Instant</strong>Platform</div>
+          </a>
+        </h1>
       </div>
 
-      <!-- NAVIGATION START -->
-      <div class="span-13 column last" id="nav">
-        <div class="lift:menu.builder"/>
+      <div id="content">
+        <h2 class="underlined heavy">Name compare</h2>
+        <lift:bind name="content" />
       </div>
-      <!-- NAVIGATION END -->
 
-    </div>
-    <!-- HEADER END -->
-
-    <div id="wrapper" class="span-24">
-
-      <!-- CONTENT START -->
-      <div class="column span-16 colborder">
-        <lift:bind name="content"/>
+      <div id="footer" class="row">
+        <div class="span3 block-right prepend-top append-bottom">
+          <div class="logo instantor green right">Instantor</div>
+          <p class="light">
+            <small>Component of Instant Platform, &copy; Instantor AB</small>
+          </p>
+        </div>
       </div>
-      <!-- CONTENT END -->
 
-      <div class="clear">&nbsp;</div>
+      <lift:SharedJS name="jquery"/>
+      <lift:GeneratedJS name="name-compare"/>
     </div>
-
-    <!-- FOOTER START -->
-    <div class="span-24 last clearfix" id="footer">
-    </div>
-    <!-- FOOTER END -->
-
-  </div>
-  <!-- CONTAINER END -->
-
-</body>
-
+  </body>
 </html>
+
+
+

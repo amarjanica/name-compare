@@ -1,0 +1,82 @@
+server {
+  listen 192.168.2.200:443;
+  server_name platform.instantor-local.com;
+
+  ssl on;
+  ssl_certificate     r:\\Code\\instant-platform\\certs\\server\\platform.instantor.com.crt.chained;
+  ssl_certificate_key r:\\Code\\instant-platform\\certs\\server\\platform.instantor.com.key;
+
+  ssl_client_certificate r:\\Code\\instant-platform\\certs\\client\\ip-local-tech.crt;
+  ssl_verify_client optional;
+
+  keepalive_timeout   70;
+  ssl_session_timeout 5m;
+
+  ssl_protocols             SSLv3 TLSv1;
+  ssl_ciphers               ALL:!ADH:!EXPORT:!SSLv2:RC4+RSA:+HIGH:+MEDIUM;
+  ssl_prefer_server_ciphers on;
+
+  access_log r:\\Code\\instant-platform\\logs\\nginx\\access.log;
+  error_log  r:\\Code\\instant-platform\\logs\\nginx\\error.log;
+
+  # --------------------------------------------------------------------------------------------------
+
+  # PLATFORM - SANDBOX - NAME COMPARE - GENERATED STATIC
+  location ~ ^/sandbox/name-compare/static/(?:less-(css)|coffee-(js))/.+?(?:-[0-9]+)?\.(?:\1|\2)$ {
+    rewrite ^/sandbox/name-compare(/static/(?:less-css|coffee-js)/.+?)(?:-[0-9]+)?(\.(?:css|js))$ $1$2 break;
+    root    r:\\Code\\name-compare\\code\\scala\\Lift\\src\\main;
+    expires 30d;
+    access_log r:\\Code\\name-compare\\logs\\nginx\\access.log;
+    error_log  r:\\Code\\name-compare\\logs\\nginx\\error.log;
+  }
+
+  # PLATFORM - SANDBOX - NAME COMPARE - DIRECT STATIC
+  location ~ ^/sandbox/name-compare/static/.*$ {
+    rewrite ^/sandbox/name-compare(/static/.*)$ $1 break;
+    root       r:\\Code\\name-compare\\code\\scala\\Lift\\src\\main;
+    expires    30d;
+    access_log r:\\Code\\name-compare\\logs\\nginx\\access.log;
+    error_log  r:\\Code\\name-compare\\logs\\nginx\\error.log;
+  }
+
+  # PLATFORM - SANDBOX - NAME COMPARE - SHARED
+  location ~ ^/sandbox/name-compare/shared/.*$ {
+    rewrite ^/sandbox/name-compare(/shared/.*)$ $1 break;
+    root       r:\\Code\\name-compare;
+    expires    30d;
+    access_log r:\\Code\\name-compare\\logs\\nginx\\access.log;
+    error_log  r:\\Code\\name-compare\\logs\\nginx\\error.log;
+  }
+
+  # PLATFORM - SANDBOX - NAME COMPARE - CYBORGS
+  location ~ ^/sandbox/name-compare/(?:favicon\.ico|robots\.txt)$ {
+    rewrite ^/sandbox/name-compare(/(?:favicon\.ico|robots\.txt))$ $1 break;
+    root       r:\\Code\\name-compare\\code\\static;
+    expires    30d;
+    access_log r:\\Code\\name-compare\\logs\\nginx\\access.log;
+    error_log  r:\\Code\\name-compare\\logs\\nginx\\error.log;
+  }
+
+  # PLATFORM - SANDBOX - NAME COMPARE - LIFT INTERNALS
+  location ~ ^/sandbox-name-compare-.*$ {
+    proxy_pass http://localhost:9633;
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Client-Verify $ssl_client_verify;
+    proxy_set_header X-Client-DN $ssl_client_s_dn;
+    access_log r:\\Code\\name-compare\\logs\\nginx\\access.log;
+    error_log  r:\\Code\\name-compare\\logs\\nginx\\error.log;
+  }
+
+  # PLATFORM - SANDBOX - NAME COMPARE - LIFT
+  location ~ ^/sandbox/name-compare/.*$ {
+    rewrite ^/sandbox/name-compare(/.*)$ $1 break;
+    proxy_pass http://localhost:9633;
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Client-Verify $ssl_client_verify;
+    proxy_set_header X-Client-DN $ssl_client_s_dn;
+    access_log r:\\Code\\name-compare\\logs\\nginx\\access.log;
+    error_log  r:\\Code\\name-compare\\logs\\nginx\\error.log;
+  }
+}

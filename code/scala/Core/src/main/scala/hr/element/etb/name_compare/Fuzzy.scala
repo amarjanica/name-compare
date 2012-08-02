@@ -46,4 +46,3 @@ case class Fuzzy private(
 case class FuzzyString(original: String, processed: String) {
   override val toString = processed
 }
-
