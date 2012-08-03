@@ -2,54 +2,58 @@
 
   <h3 class="underlined">Comparison form</h3>
 
+  <lift:ShowLastTest>
   <div>
     <form id="name-compare" class="form-horizontal">
       <fieldset>
         <div class="control-group">
           <label class="control-label" for="transliteration">&nbsp;</label>
           <div class="controls">
-              <label class="checkbox">
-                <input type="checkbox" id="transliteration" name="transliteration" value="Transliterate characters" checked="checked"/>
-                Transliterate characters <em>(remove diacritics when performing matching)</em>
-              </label>
-            </div>
+            <label class="checkbox">
+              <input type="checkbox" id="transliteration" name="transliteration" value="Transliterate characters" v:transliteration="checked"/>
+              Transliterate characters <em>(remove diacritics when performing matching)</em>
+            </label>
+          </div>
         </div>
 
         <div class="control-group">
           <label class="control-label" for="lowercasing">&nbsp;</label>
           <div class="controls">
-              <label class="checkbox">
-                <input type="checkbox" id="lowercasing" name="lowercasing" value="Match via lowercase" checked="checked" />
-                Match via lowercase <em>(ignore character case when matching)</em>
-              </label>
-            </div>
+            <label class="checkbox">
+              <input type="checkbox" id="lowercasing" name="lowercasing" value="Match via lowercase" v:lowercasing="checked" />
+              Match via lowercase <em>(ignore character case when matching)</em>
+            </label>
+          </div>
         </div>
+
         <div class="control-group">
           <label class="control-label" for="directThreshold">Direct threshold</label>
           <div class="controls">
-            <input type="text" id="directThreshold" name="directThreshold" class="input span1" value="95"/> %
+            <input type="text" id="directThreshold" name="directThreshold" class="input span1" v:directThreshold="XX"/> %
           </div>
         </div>
 
         <div class="control-group">
           <label class="control-label" for="initialsThreshold">Initials threshold</label>
           <div class="controls">
-            <input type="text" id="initialsThreshold" name="initialsThreshold" class="input span1" value="100" /> %
+            <input type="text" id="initialsThreshold" name="initialsThreshold" class="input span1" v:initialsThreshold="XX" /> %
           </div>
         </div>
 
         <div class="control-group">
           <label class="control-label" for="hyphenThreshold">Hyphen threshold</label>
           <div class="controls">
-            <input type="text" id="hyphenThreshold" name="hyphenThreshold" class="input span1" value="100" /> %
+            <input type="text" id="hyphenThreshold" name="hyphenThreshold" class="input span1" v:hyphenThreshold="XX" /> %
           </div>
         </div>
 
         <div class="control-group">
-          <label class="control-label" for="names">Names block<br />
-          (example: Joe, Doe)</label>
+          <label class="control-label" for="names">
+            Names block<br />
+            (example: Joe, Doe)
+          </label>
           <div class="controls">
-            <textarea id="names" name="names" class="span8" rows="10" cols="40"><lift:ShowLastTest/></textarea>
+            <textarea id="names" name="names" class="span8" rows="10" cols="40"><v:names/></textarea>
           </div>
         </div>
         <div class="form-actions">
@@ -58,6 +62,7 @@
       </fieldset>
     </form>
   </div>
+  </lift:ShowLastTest>
   <br/>
 
   <div id="response">
@@ -83,13 +88,11 @@
             <th>Decision</th>
           </tr>
         </thead>
-        <tbody>
-        </tbody>
+        <tbody/>
       </table>
 
       <textarea id="data-text" class="span12 hide js-resultlist" rows="5" cols="50"></textarea>
     </div>
   </div>
   <br/>
-
 </div>

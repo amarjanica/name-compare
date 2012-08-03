@@ -19,7 +19,7 @@ object LastTest extends SessionVar[Params](
   , true
   , 0.95f
   , 1f
-  , 1f
+  , 0.6f
   , Resource.fromClasspath("names.txt").slurpString("UTF-8")
   )
 )
