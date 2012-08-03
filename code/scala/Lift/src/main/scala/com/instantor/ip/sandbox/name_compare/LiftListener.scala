@@ -10,6 +10,18 @@ import net.liftweb.json._
 import net.liftweb.json.JsonDSL._
 import net.liftweb.json.Printer._
 import hr.element.etb.Pimps._
+import net.liftweb.http.SessionVar
+import scalax.io._
+
+object LastTest extends SessionVar[Params](
+  Params(
+    true
+  , true
+  , 0.95f
+  , 1f
+  , Resource.fromClasspath("names.txt").slurpString("UTF-8")
+  )
+)
 
 case class Params(
     transliteration: Boolean
@@ -27,6 +39,8 @@ object LiftListener extends RestHelper {
       val response =
         try {
           val params = json._1.asInstanceOf[JObject].extract[Params]
+          LastTest.set(params)
+
           val response = process(params)
           response
         }

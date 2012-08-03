@@ -27,9 +27,8 @@ libraryDependencies := Seq(
 , "hr.element.etb" %% "etb-util" % "0.2.16"
 , "hr.element.etb" %% "etb-lift" % "0.0.21"
 , "ch.qos.logback" % "logback-classic" % "1.0.6"
+, "com.github.scala-incubator.io" %% "scala-io-file" % "0.4.0"
 , "org.scalatest" %% "scalatest" % "2.0.M2" % "test"
-, "com.ibm.icu" % "icu4j" % "49.1"
-, "uk.ac.shef.wit" % "simmetrics" % "1.6.2"
 )
 
 seq(webSettings: _*)
