@@ -1,10 +1,9 @@
    
-    FUZZY STRING MATCHING   
-
+    NAME COMPARISON PROJECT
 
  *  FuzzyMatch.apply is a method for comparing 2 names, that uses Levenshtein algorithm.
  *  The Levenshtein algorithm (also called Edit-Distance) calculates the
- *  least number of edit operations that are necessary to modify one string to obtain another string.
+ *  least number of edit operations that are necessary to modify one string to become an another string.
  *
  *  Method FuzzyMatch.apply returns 0 to 1 correlation between 2 names.
  *
@@ -13,6 +12,9 @@
  *  1. Transliterated
  *  2. Alphabetically sorted
  *  3. Converted to lowercase and trimmed for extra whitespaces
-
-
-
+ *
+ *  Additionally, specialised handlers have been created for special cases of names
+ *  containing hyphens or names which have been shortened to initials.
+ *
+ *  A live demo of this code is available on the Instantor sandbox server at:
+ *  https://platform.instantor.com/sandbox/name-compare/
