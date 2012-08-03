@@ -17,7 +17,7 @@ externalResolvers <<= resolvers map ( rs =>
 )
 
 libraryDependencies := Seq(
-  "hr.element.etb" %% "name-compare" % "0.1.0"
+  "hr.element.etb" %% "name-compare" % "0.1.1-3"
 , "org.joda" % "joda-convert" % "1.2"
 , "joda-time" % "joda-time" % "2.1"
 , "org.scala-tools.time" %% "time" % "0.5"

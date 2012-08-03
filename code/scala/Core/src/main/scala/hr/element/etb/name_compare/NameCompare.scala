@@ -2,13 +2,14 @@ package hr.element.etb.name_compare
 
 import uk.ac.shef.wit.simmetrics.similaritymetrics.Levenshtein
 
-object NameCompare extends NameCompare(true, true, 0.95f, 1f)
+object NameCompare extends NameCompare(true, true, 0.95f, 1f, 1f)
 
 case class NameCompare private(
     transliteration: Boolean
   , lowercasing: Boolean
   , directThreshold: Float
-  , initialsThreshold: Float) {
+  , initialsThreshold: Float
+  , hyphenThreshold: Float) {
 
   def setTransliteration(transliteration: Boolean) =
     copy(transliteration = transliteration)
@@ -16,11 +17,14 @@ case class NameCompare private(
   def setLowercasing(lowercasing: Boolean) =
     copy(lowercasing = lowercasing)
 
-  def setdirectThreshold(directThreshold: Float) =
+  def setDirectThreshold(directThreshold: Float) =
     copy(directThreshold = directThreshold)
 
-  def setinitialsThreshold(initialsThreshold: Float) =
+  def setInitialsThreshold(initialsThreshold: Float) =
     copy(initialsThreshold = initialsThreshold)
+
+  def setHyphenThreshold(hyphenThreshold: Float) =
+    copy(hyphenThreshold = hyphenThreshold)
 
   lazy val fuzzy = Fuzzy
     .setTransliteration(transliteration)
@@ -59,6 +63,47 @@ case class NameCompare private(
       }.max
     }
 
+    lazy val hyphenPercentage = {
+      val _src = src.processed
+      val _dst = dst.processed
+
+      if(!_dst.contains('-'))
+      {
+        0.0f
+      }
+      else
+      {
+        val names = _dst replace ('-', ' ')
+        val namesList = names split ' ' toList
+
+        val combinations =
+          for{n <- 1 to namesList.length} yield (namesList.combinations(n)) toList
+
+        val comb = (for{v <- combinations
+            n <-v} yield n) toList
+
+        val res = comb.map{ combination =>
+          val perms = combination.permutations toList
+
+          perms.map{ p =>
+            val permName = p mkString " "
+            new Levenshtein getSimilarity(_src, permName)
+            }.max
+          }.max
+
+       val nWordsDst = namesList.length toFloat
+       val nWordsSrc = (_src split " ").length toFloat
+
+       if(nWordsDst > nWordsSrc)
+       {
+         res*(nWordsSrc/nWordsDst)
+       } else
+       {
+         res*(nWordsDst/nWordsSrc)
+       }
+      }
+    }
+
     lazy val result =
       if (identical) {
         IdenticalMatch
@@ -68,6 +113,9 @@ case class NameCompare private(
       }
       else if (initialsPercentage >= initialsThreshold) {
         InitialsMatch(initialsPercentage)
+      }
+      else if (hyphenPercentage >= hyphenThreshold) {
+        HyphenMatch(hyphenPercentage)
       }
       else {
         NoMatch(directPercentage)

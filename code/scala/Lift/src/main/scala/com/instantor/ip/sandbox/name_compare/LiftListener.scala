@@ -19,6 +19,7 @@ object LastTest extends SessionVar[Params](
   , true
   , 0.95f
   , 1f
+  , 1f
   , Resource.fromClasspath("names.txt").slurpString("UTF-8")
   )
 )
@@ -28,6 +29,7 @@ case class Params(
   , lowercasing: Boolean
   , directThreshold: Float
   , initialsThreshold: Float
+  , hyphenThreshold: Float
   , names: String)
 
 object LiftListener extends RestHelper {
@@ -61,8 +63,9 @@ object LiftListener extends RestHelper {
     val comparer = NameCompare
       .setTransliteration(params.transliteration)
       .setLowercasing(params.lowercasing)
-      .setdirectThreshold(params.directThreshold)
-      .setinitialsThreshold(params.initialsThreshold)
+      .setDirectThreshold(params.directThreshold)
+      .setInitialsThreshold(params.initialsThreshold)
+      .setHyphenThreshold(params.hyphenThreshold)
 
     val lines = LinePattern split params.names
 
