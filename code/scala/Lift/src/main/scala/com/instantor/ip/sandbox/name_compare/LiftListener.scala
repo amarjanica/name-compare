@@ -4,110 +4,81 @@ package name_compare
 import hr.element.etb.name_compare._
 import net.liftweb.http._
 import rest._
-import net.liftweb.common.Full
-import net.liftweb.common.Box
+import net.liftweb.common._
 import scala.xml._
-import net.liftweb.util.BindPlus._
-import net.liftweb.util.Helpers._
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
-import org.apache.commons.codec.binary.Base64
-import java.io.ByteArrayInputStream
-import java.io.FileInputStream
-import net.liftweb.json.JsonAST
+import net.liftweb.json._
 import net.liftweb.json.JsonDSL._
 import net.liftweb.json.Printer._
-import net.liftweb.json.TypeHints
-import net.liftweb.json.Serialization
-import net.liftweb.json.NoTypeHints
-import net.liftweb.json.JsonParser
+import hr.element.etb.Pimps._
 
+case class Params(
+    transliteration: Boolean
+  , lowercasing: Boolean
+  , directThreshold: Float
+  , initialsThreshold: Float
+  , names: String)
 
 object LiftListener extends RestHelper {
-  private val NewLineRegex = "[\r\n]+"r
 
-    //http://platform.instantor-local.com/sandbox/name-compare/
-
-  val logger = LoggerFactory.getLogger(LiftListener.getClass())
   serve {
-    case req @ Req("api" :: Nil, _, PostRequest) =>
+    case "api" :: Nil JsonPost json =>
+      implicit def formats = Serialization.formats(NoTypeHints)
 
-      ( req.param("param") ) match {
-        case (
-            Full(AsParams(param))
-              /*Full(directTreshold)
-            , Full(initialsTreshold)
-            , Full(initialsOption)
-            , Full(transliteralization)
-            , Full(input_names)*/
-            ) =>  println(param)
-              jsonCompare(param.directTreshold toFloat
-                , param.initialsTreshold toFloat
-                , param.initialsOption
-                , param.transliteralization
-                , param.input_names)
+      val response =
+        try {
+          val params = json._1.asInstanceOf[JObject].extract[Params]
+          val response = process(params)
+          response
+        }
+        catch {
+          case x: Throwable =>
+            x.printStackTrace()
 
-        case _ => JsonResponse(("Success" -> "false") ~ ("Reason" -> "bad request"))
+            ("Success" -> false) ~ ("Reason" -> x.toString)
+        }
 
-      }
-
+      JsonResponse(response)
   }
 
-  def jsonCompare(
-        directTreshold: Float
-      , initialsTreshod: Float
-      , initialsOption: Boolean
-      , transliteralization: Boolean
-      , input: String): LiftResponse ={
+  private val LinePattern = "[\r\n]+"r
+  private val NamePattern = "(.*)[,;\t]+(.*)"r
 
-    val line = """(.*)[,/t+](.*)"""r
+  def process(params: Params) = {
+    val comparer = NameCompare
+      .setTransliteration(params.transliteration)
+      .setLowercasing(params.lowercasing)
+      .setdirectThreshold(params.directThreshold)
+      .setinitialsThreshold(params.initialsThreshold)
 
-    val out = for{
-        t: String <- (NewLineRegex split input) toList
-        val line(src, dst) = t
-        val comparison = NameCompare.apply(src, dst)
-        val res = ("srcname" -> src) ~
-                  ("dstname" -> dst) ~
-                  ("description" -> comparison.descr) ~
-                  ("percentage" -> comparison.perc * 100) ~
-                  ("decision" -> comparison.dec)
-      } yield res
+    val lines = LinePattern split params.names
 
-
-      JsonResponse(out)
-  }
-
-  case class Params(
-        directTreshold: String
-      , initialsTreshold: String
-      , initialsOption: Boolean
-      , transliteralization: Boolean
-      , input_names: String
-      )
-
-  object  AsParams{
-    implicit def formats = Serialization.formats(NoTypeHints)
-
-    def unapply(s: String): Option[Params] =
+    lines.map { l =>
+      val (cD, (fS, fD)) =
       try {
-              Some(JsonParser.parse(s).extract[Params])
-      } catch {
-        case e  => e.printStackTrace()
-          None
+        val NamePattern(src, dst) = l
+        comparer(src.ksp, dst.ksp)
+      }
+      catch {
+        case _: Throwable =>
+          val eS = FuzzyString(l, "Could not separate names")
+          MatchError -> (eS, eS)
       }
 
-  }
-  /* (req.param("username"), req.param("password")) match {
-        case (Full(username), Full(password)) =>
-          userRep.editUser(username, password) match {
-            case true =>
-              JsonResponse(("success" -> true)~
-                ("message" -> "Lozinka uspješno promijenjena."))
-            case false =>
-              JsonResponse(("success" -> false)~
-                ("message" -> "Dogodila se pogreška prilikom promjene lozinke!"))
-          }
-        case _ => BadResponse()
+      implicit def formats = Serialization.formats(NoTypeHints)
 
-   */
+      ("comparisonDecision" ->
+        ("decision" -> cD.decision) ~
+        ("percentage" -> cD.percentage) ~
+        ("description" -> cD.description)
+      ) ~
+      ("src" ->
+        ("original" -> fS.original) ~
+        ("processed" -> fS.processed)
+      ) ~
+      ("dst" ->
+        ("original" -> fD.original) ~
+        ("processed" -> fD.processed)
+      )
+    }.toList: JArray
+  }
 }

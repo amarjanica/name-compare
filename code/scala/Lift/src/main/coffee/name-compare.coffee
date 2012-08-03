@@ -5,21 +5,39 @@ $ ->
     responseField = $('#response .results')
     responseField.find('.status').html 'Working&hellip;'
 
-    out = []
-    formRoot.find('input, textarea').each ->
-      fieldName = $(@)[0].name
-      fieldValue = if $(@)[0].type is 'checkbox' then $(@).is(':checked') else $(@).val()
+    t = $('#transliteration').is(':checked')
+    l = $('#lowercasing').is(':checked')
+    dT = parseFloat($('#directThreshold').val())
+    iT = parseFloat($('#initialsThreshold').val())
+    n = $('#names').val()
 
-      field = {}
-      field[fieldName] = fieldValue
+    if isNaN(dT) || dT < 0
+      dT = 0
+    else if dT > 100
+      dT = 100
 
-      out.push field
+    if isNaN(iT) || iT < 0
+      iT = 0
+    else if iT > 100
+      iT = 100
 
+    $('#directThreshold').val(dT)
+    $('#initialsThreshold').val(iT)
+    
     $.ajax
       type: 'post'
       url: '/sandbox/name-compare/api'
+
+      contentType: 'application/json; charset=utf-8'
+      dataType: 'json'
+      
       data:
-        param: JSON.stringify out
+        JSON.stringify
+          transliteration: t
+          lowercasing: l
+          directThreshold: dT / 100
+          initialsThreshold: iT / 100
+          names: n
 
       success: (response) ->
         responseField.find('.status').text ''
@@ -27,13 +45,24 @@ $ ->
         table = responseField.find 'table tbody'
         list = responseField.find 'textarea'
 
+        table.html ''
+        list.html ''
+
         i = 1
         for row in response
-          perc = row.percentage.toFixed 2
-          status = if row.decision is 'Yes' then 'label-success' else if row.decision is 'No' then 'label-important' else 'label-warning'
-          decision = "<span class=\"label #{status}\">#{row.decision}</span>"
-          table.append "<tr><td class=\"center\">#{i}</td><td>#{row.srcname}</td><td>#{row.dstname}</td><td class=\"center\">#{row.description}</td><td class=\"right\">#{perc}%</td><td class=\"center\">#{decision}</td></tr>"
-          list.append "#{row.srcname};#{row.dstname};#{row.description};#{row.percentage.toFixed(2)};#{row.decision}\r\n"
+          c = row.comparisonDecision
+          status = if c.decision is 'Yes' then 'label-success' else if c.decision is 'No' then 'label-important' else 'label-warning'
+          decision = "<span class=\"label #{status}\">#{c.decision}</span>"
+          perc = (c.percentage * 100).toFixed 2
+          desc = c.description
+          
+          sO = row.src.original
+          sP = row.src.processed
+          dO = row.dst.original
+          dP = row.dst.processed
+          
+          table.append "<tr><td class=\"center\">#{i}</td><td>#{sO}</td><td>#{dO}</td><td class=\"center\">#{desc}</td><td class=\"right\">#{perc}%</td><td class=\"center\">#{decision}</td></tr>"
+          list.append "#{sO}\t#{sP}\t#{dO}\t#{dP}\t#{c.decision}\t#{desc}\t#{perc}%\r\n"
           i++
 
         responseField.find('table').show()

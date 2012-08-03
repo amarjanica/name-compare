@@ -5,7 +5,7 @@ import com.ibm.icu.text.Transliterator
 object Fuzzy extends Fuzzy(true, true) {
   private val ASCII = Transliterator.getInstance("Latin-ASCII")
 
-  private val SplitPattern = """\s{2,}"""r
+  private val SplitPattern = """\s+"""r
   private val Spacer = " "
 
   private val trimWhiteSpace = SplitPattern replaceAllIn (_: String, Spacer)
@@ -19,13 +19,13 @@ object Fuzzy extends Fuzzy(true, true) {
 }
 
 case class Fuzzy private(
-    transliteralization: Boolean
+    transliteration: Boolean
   , lowercasing: Boolean) {
 
   import Fuzzy._
 
-  def setTransliteralization(transliteralization: Boolean) =
-    copy(transliteralization = transliteralization)
+  def setTransliteration(transliteration: Boolean) =
+    copy(transliteration = transliteration)
 
   def setLowercasing(lowercasing: Boolean) =
     copy(lowercasing = lowercasing)
@@ -33,13 +33,16 @@ case class Fuzzy private(
   def lowerCaseAction =
     if (lowercasing) lowerCase else passThru
 
-  def transliteralizationAction =
-    if (transliteralization) transliterate else passThru
+  def transliterateAction =
+    if (transliteration) transliterate else passThru
 
   def apply(text: String) =
     FuzzyString(
       text
-    , (trimWhiteSpace andThen lowerCase andThen transliterate andThen sortWords)(text)
+    , (trimWhiteSpace andThen
+      lowerCaseAction andThen
+      transliterateAction andThen
+      sortWords)(text)
     )
 }
 

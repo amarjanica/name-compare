@@ -5,26 +5,31 @@ import uk.ac.shef.wit.simmetrics.similaritymetrics.Levenshtein
 object NameCompare extends NameCompare(true, true, 0.95f, 1f)
 
 case class NameCompare private(
-    transliteralization: Boolean
+    transliteration: Boolean
   , lowercasing: Boolean
   , directThreshold: Float
   , initialsThreshold: Float) {
 
-  def setTransliteralization(transliteralization: Boolean) =
-    copy(transliteralization = transliteralization)
+  def setTransliteration(transliteration: Boolean) =
+    copy(transliteration = transliteration)
 
   def setLowercasing(lowercasing: Boolean) =
     copy(lowercasing = lowercasing)
 
-  def setDirectThreshold(directThreshold: Float) =
+  def setdirectThreshold(directThreshold: Float) =
     copy(directThreshold = directThreshold)
 
+  def setinitialsThreshold(initialsThreshold: Float) =
+    copy(initialsThreshold = initialsThreshold)
+
   lazy val fuzzy = Fuzzy
-    .setTransliteralization(transliteralization)
+    .setTransliteration(transliteration)
     .setLowercasing(lowercasing)
 
-  def apply(src: String, dst: String) =
-    Comparison(fuzzy(src), fuzzy(dst)).result
+  def apply(src: String, dst: String) = {
+    val c = Comparison(fuzzy(src), fuzzy(dst))
+    c.result -> (c.src, c.dst)
+  }
 
 // ----------------------------------------------------------------------------
 
@@ -32,11 +37,13 @@ case class NameCompare private(
       src: FuzzyString
     , dst: FuzzyString) {
 
+    lazy val identical =
+      src.original == dst.original
+
     lazy val directPercentage =
       new Levenshtein getSimilarity(src.processed, dst.processed)
 
     lazy val initialsPercentage = {
-
       val _src = src.processed
       val _dst = dst.processed
 
@@ -53,7 +60,10 @@ case class NameCompare private(
     }
 
     lazy val result =
-      if (directPercentage >= directThreshold) {
+      if (identical) {
+        IdenticalMatch
+      }
+      else if (directPercentage >= directThreshold) {
         DirectMatch(directPercentage)
       }
       else if (initialsPercentage >= initialsThreshold) {
@@ -64,31 +74,3 @@ case class NameCompare private(
       }
   }
 }
-
-/*
-    private def checkInitials() = {
-      if(dst contains '.') {
-        val namesList = SplitPattern split src
-
-        val initialsList = for {
-          n <- namesList
-          if n.nonEmpty
-        } yield n.head + "."
-
-        val srcNames = namesList ++ initialsList toSet
-        val dstNames = SplitPattern split dst toSet
-
-        if (dstNames.forall(srcNames)) {
-          Maybe("Initials were matched")
-        }
-        else {
-          No("Initials did not match")
-        }
-      } else {
-        No("Direct match not found")
-      }
-    }
-
-    override lazy val toString = result.toString
-  }
-*/

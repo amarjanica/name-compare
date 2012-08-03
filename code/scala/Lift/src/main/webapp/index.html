@@ -6,153 +6,155 @@
     <form id="name-compare" class="form-horizontal">
       <fieldset>
         <div class="control-group">
-          <label class="control-label" for="directTreshold">Direct treshold</label>
-          <div class="controls">
-            <input type="text" id="directTreshold" name="directTreshold" class="input span1" value="95"/> %
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="initialsTreshold">Initials treshold</label>
-          <div class="controls">
-            <input type="text" id="initialsTreshold" name="initialsTreshold" class="input span1" value="100" /> %
-          </div>
-        </div>
-
-        <div class="control-group">
-          <label class="control-label" for="initialsOption">&nbsp;</label>
+          <label class="control-label" for="transliteration">&nbsp;</label>
           <div class="controls">
               <label class="checkbox">
-                <input type="checkbox" id="initialsOption" name="initialsOption" value="Match initials" />
-                Match initials
-              </label>
-            </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="transliteralization">&nbsp;</label>
-          <div class="controls">
-              <label class="checkbox">
-                <input type="checkbox" id="transliteralization" name="transliteralization" value="Transliterate" />
-                Transliterate
+                <input type="checkbox" id="transliteration" name="transliteration" value="Transliterate characters" checked="checked"/>
+                Transliterate characters <em>(remove diacritics when performing matching)</em>
               </label>
             </div>
         </div>
 
         <div class="control-group">
-          <label class="control-label" for="input_names">Input names</label>
+          <label class="control-label" for="lowercasing">&nbsp;</label>
           <div class="controls">
-            <textarea id="input_names" name="input_names" class="span8" rows="10" cols="40">Hans Müller,--- ---
-Hans Müller,Hans Müller
-Hans Müller,Hans-Jörg Müller
-Hans Müller,Klaus-Hans Müller
-Hans Müller,Klaus Müller
-Hans Müller,Paula Müller
-Hans Müller,H. Müller
-Hans Müller,K. Müller
-Hans Müller,Hans Müller-Meier
-Hans Müller,Hans Müller-Meier
-Hans Müller,Hans-Jörg Müller-Meier
-Hans Müller,Klaus-Hans Müller-Meier
-Hans Müller,Klaus Müller-Meier
-Hans Müller,Paula Müller-Meier
-Hans Müller,H. Müller-Meier
-Hans Müller,K. Müller-Meier
-Hans Müller,Hans Müller
-Hans Müller,Hans-Jörg Müller
-Hans Müller,Klaus-Hans Müller
-Hans Müller,Klaus Müller
-Hans Müller,Paula Müller
-Hans Müller,H. Müller
-Hans Müller,K. Müller
-Hans Müller,Hans Müller-Meier
-Hans Müller,Hans Müller-Meier
-Hans Müller,Hans-Jörg Müller-Meier
-Hans Müller,Klaus-Hans Müller-Meier
-Hans Müller,Klaus Müller-Meier
-Hans Müller,Paula Müller-Meier
-Hans Müller,H. Müller-Meier
-Hans Müller,K. Müller-Meier
-Hans Müller,Hans Müller
-Hans Müller,Hans-Jörg Müller
-Hans Müller,Klaus-Hans Müller
-Hans Müller,Klaus Müller
-Hans Müller,Paula Müller
-Hans Müller,H. Müller
-Hans Müller,K. Müller
-Hans Müller,Hans Müller-Meier
-Hans Müller,Hans Müller-Meier
-Hans Müller,Hans-Jörg Müller-Meier
-Hans Müller,Klaus-Hans Müller-Meier
-Hans Müller,Klaus Müller-Meier
-Hans Müller,Paula Müller-Meier
-Hans Müller,H. Müller-Meier
-Hans Müller,K. Müller-Meier
-Hans Müller,Hans Müller
-Hans Müller,Hans-Jörg Müller
-Hans Müller,Klaus-Hans Müller
-Hans Müller,Klaus Müller
-Hans Müller,Paula Müller
-Hans Müller,H. Müller
-Hans Müller,K. Müller
-Hans Müller,Hans Müller-Meier
-Hans Müller,Hans Müller-Meier
-Hans Müller,Hans-Jörg Müller-Meier
-Hans Müller,Klaus-Hans Müller-Meier
-Hans Müller,Klaus Müller-Meier
-Hans Müller,Paula Müller-Meier
-Hans Müller,H. Müller-Meier
-Hans Müller,K. Müller-Meier
-Hans Müller,Hans Müller
-Hans Müller,Hans-Jörg Müller
-Hans Müller,Klaus-Hans Müller
-Hans Müller,Klaus Müller
-Hans Müller,Paula Müller
-Hans Müller,H. Müller
-Hans Müller,K. Müller
-Hans Müller,Hans Müller-Meier
-Hans Müller,Hans Müller-Meier
-Hans Müller,Hans-Jörg Müller-Meier
-Hans Müller,Klaus-Hans Müller-Meier
-Hans Müller,Klaus Müller-Meier
-Hans Müller,Paula Müller-Meier
-Hans Müller,H. Müller-Meier
-Hans Müller,K. Müller-Meier
-Hans Müller,Hans Meier
-Hans Müller,Hans-Jörg Meier
-Hans Müller,Klaus-Hans Meier
-Hans Müller,Klaus Meier
-Hans Müller,Paula Meier
-Hans Müller,H. Meier
-Hans Müller,K. Meier
-Hans Müller,Hans Meier
-Hans Müller,Hans-Jörg Meier
-Hans Müller,Klaus-Hans Meier
-Hans Müller,Klaus Meier
-Hans Müller,Paula Meier
-Hans Müller,H. Meier
-Hans Müller,K. Meier
-Hans Müller,Hans Meier
-Hans Müller,Hans-Jörg Meier
-Hans Müller,Klaus-Hans Meier
-Hans Müller,Klaus Meier
-Hans Müller,Paula Meier
-Hans Müller,H. Meier
-Hans Müller,K. Meier
-Hans Müller,Hans Meier
-Hans Müller,Hans-Jörg Meier
-Hans Müller,Klaus-Hans Meier
-Hans Müller,Klaus Meier
-Hans Müller,Paula Meier
-Hans Müller,H. Meier
-Hans Müller,K. Meier
-Hans Müller,K. M.
-Hans Müller,H. M.
-Hans Müller,Hans M.
-Hans Muller Meier,H. M. Meier
-Hans Muller Meier,H. Muller Meier
-Hans Muller Meier,Muller Meier Hans
-Hans Muller Meier,Muller Meier H.
-Hans Muller Meier,Muller Meier K.
-Hrvoje Horvat Hegedus,H. H.</textarea>
+              <label class="checkbox">
+                <input type="checkbox" id="lowercasing" name="lowercasing" value="Match via lowercase" checked="checked" />
+                Match via lowercase <em>(ignore character case when matching)</em>
+              </label>
+            </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="directThreshold">Direct threshold</label>
+          <div class="controls">
+            <input type="text" id="directThreshold" name="directThreshold" class="input span1" value="95"/> %
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label" for="initialsThreshold">Initials threshold</label>
+          <div class="controls">
+            <input type="text" id="initialsThreshold" name="initialsThreshold" class="input span1" value="100" /> %
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label" for="names">Names block<br />
+          (example: Joe, Doe)</label>
+          <div class="controls">
+            <textarea id="names" name="names" class="span8" rows="10" cols="40">Hans Müller, --- ---
+Hans Müller, Hans Müller
+Hans Müller, Hans-Jörg Müller
+Hans Müller, Klaus-Hans Müller
+Hans Müller, Klaus Müller
+Hans Müller, Paula Müller
+Hans Müller, H. Müller
+Hans Müller, K. Müller
+Hans Müller, Hans Müller-Meier
+Hans Müller, Hans Müller-Meier
+Hans Müller, Hans-Jörg Müller-Meier
+Hans Müller, Klaus-Hans Müller-Meier
+Hans Müller, Klaus Müller-Meier
+Hans Müller, Paula Müller-Meier
+Hans Müller, H. Müller-Meier
+Hans Müller, K. Müller-Meier
+Hans Müller, Hans Müller
+Hans Müller, Hans-Jörg Müller
+Hans Müller, Klaus-Hans Müller
+Hans Müller, Klaus Müller
+Hans Müller, Paula Müller
+Hans Müller, H. Müller
+Hans Müller, K. Müller
+Hans Müller, Hans Müller-Meier
+Hans Müller, Hans Müller-Meier
+Hans Müller, Hans-Jörg Müller-Meier
+Hans Müller, Klaus-Hans Müller-Meier
+Hans Müller, Klaus Müller-Meier
+Hans Müller, Paula Müller-Meier
+Hans Müller, H. Müller-Meier
+Hans Müller, K. Müller-Meier
+Hans Müller, Hans Müller
+Hans Müller, Hans-Jörg Müller
+Hans Müller, Klaus-Hans Müller
+Hans Müller, Klaus Müller
+Hans Müller, Paula Müller
+Hans Müller, H. Müller
+Hans Müller, K. Müller
+Hans Müller, Hans Müller-Meier
+Hans Müller, Hans Müller-Meier
+Hans Müller, Hans-Jörg Müller-Meier
+Hans Müller, Klaus-Hans Müller-Meier
+Hans Müller, Klaus Müller-Meier
+Hans Müller, Paula Müller-Meier
+Hans Müller, H. Müller-Meier
+Hans Müller, K. Müller-Meier
+Hans Müller, Hans Müller
+Hans Müller, Hans-Jörg Müller
+Hans Müller, Klaus-Hans Müller
+Hans Müller, Klaus Müller
+Hans Müller, Paula Müller
+Hans Müller, H. Müller
+Hans Müller, K. Müller
+Hans Müller, Hans Müller-Meier
+Hans Müller, Hans Müller-Meier
+Hans Müller, Hans-Jörg Müller-Meier
+Hans Müller, Klaus-Hans Müller-Meier
+Hans Müller, Klaus Müller-Meier
+Hans Müller, Paula Müller-Meier
+Hans Müller, H. Müller-Meier
+Hans Müller, K. Müller-Meier
+Hans Müller, Hans Müller
+Hans Müller, Hans-Jörg Müller
+Hans Müller, Klaus-Hans Müller
+Hans Müller, Klaus Müller
+Hans Müller, Paula Müller
+Hans Müller, H. Müller
+Hans Müller, K. Müller
+Hans Müller, Hans Müller-Meier
+Hans Müller, Hans Müller-Meier
+Hans Müller, Hans-Jörg Müller-Meier
+Hans Müller, Klaus-Hans Müller-Meier
+Hans Müller, Klaus Müller-Meier
+Hans Müller, Paula Müller-Meier
+Hans Müller, H. Müller-Meier
+Hans Müller, K. Müller-Meier
+Hans Müller, Hans Meier
+Hans Müller, Hans-Jörg Meier
+Hans Müller, Klaus-Hans Meier
+Hans Müller, Klaus Meier
+Hans Müller, Paula Meier
+Hans Müller, H. Meier
+Hans Müller, K. Meier
+Hans Müller, Hans Meier
+Hans Müller, Hans-Jörg Meier
+Hans Müller, Klaus-Hans Meier
+Hans Müller, Klaus Meier
+Hans Müller, Paula Meier
+Hans Müller, H. Meier
+Hans Müller, K. Meier
+Hans Müller, Hans Meier
+Hans Müller, Hans-Jörg Meier
+Hans Müller, Klaus-Hans Meier
+Hans Müller, Klaus Meier
+Hans Müller, Paula Meier
+Hans Müller, H. Meier
+Hans Müller, K. Meier
+Hans Müller, Hans Meier
+Hans Müller, Hans-Jörg Meier
+Hans Müller, Klaus-Hans Meier
+Hans Müller, Klaus Meier
+Hans Müller, Paula Meier
+Hans Müller, H. Meier
+Hans Müller, K. Meier
+Hans Müller, K. M.
+Hans Müller, H. M.
+Hans Müller, Hans M.
+Hans Muller Meier, H. M. Meier
+Hans Muller Meier, H. Muller Meier
+Hans Muller Meier, Muller Meier Hans
+Hans Muller Meier, Muller Meier H.
+Hans Muller Meier, Muller Meier K.
+Hrvoje Horvat Hegedus, H. H.</textarea>
           </div>
         </div>
         <div class="form-actions">
@@ -171,8 +173,8 @@ Hrvoje Horvat Hegedus,H. H.</textarea>
       </div>
 
       <ul class="nav nav-tabs hide js-data-toggler">
-        <li class="active"><a href="#data-table">Table</a></li>
-        <li><a href="#data-text">List</a></li>
+        <li class="active"><a href="#data-table">Results</a></li>
+        <li><a href="#data-text">Excel import</a></li>
       </ul>
 
       <table id="data-table" class="table table-bordered table-striped cc-list head-centered hide js-resultlist">
