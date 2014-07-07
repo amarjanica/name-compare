@@ -1,9 +1,18 @@
 .cache
 .classpath
+.history
 .project
 .scala_dependencies
 .settings
 target
 .target
 
-project/strap/sbt-launch-*.jar
+*.~
+
+sbt-launch-*.jar
+
+*.log
+*.pyc
+
+code/scala/Lift/src/main/static/coffee-js/*.js
+code/scala/Lift/src/main/static/less-css/*.css
