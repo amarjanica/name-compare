@@ -4,34 +4,34 @@ version := "0.1.1-3"
 
 organization := "hr.element.etb"
 
-crossScalaVersions := Seq("2.9.2", "2.9.1-1", "2.9.1", "2.9.0-1", "2.9.0")
+crossScalaVersions := Seq("2.10.4", "2.9.2", "2.9.1-1", "2.9.1", "2.9.0-1", "2.9.0")
 
-scalaVersion <<= crossScalaVersions(_.head)
+scalaVersion := crossScalaVersions.value.head
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "UTF-8", "-optimise")
 
-unmanagedSourceDirectories in Compile <<= (scalaSource in Compile)(_ :: Nil)
+unmanagedSourceDirectories in Compile := Seq((scalaSource in Compile).value)
 
-unmanagedSourceDirectories in Test <<= (scalaSource in Test)(_ :: Nil)
+unmanagedSourceDirectories in Test := Seq((scalaSource in Test).value)
 
-resolvers := Seq("Element Nexus" at "http://maven.element.hr/nexus/content/groups/public/")
+resolvers := Seq("Element Nexus" at "http://repo.element.hr/nexus/content/groups/public/")
 
 externalResolvers <<= resolvers map ( rs =>
-  Resolver.withDefaultResolvers(rs, mavenCentral = false, scalaTools = false)
+  Resolver.withDefaultResolvers(rs, mavenCentral = false)
 )
 
 libraryDependencies := Seq(
   "com.ibm.icu" % "icu4j" % "49.1"
 , "uk.ac.shef.wit" % "simmetrics" % "1.6.2"
-, "org.scalatest" %% "scalatest" % "2.0.M2" % "test"
+, "org.scalatest" %% "scalatest" % "2.0" % "test"
 )
 
 publishTo <<= (version) ( v => Some(
   if (v endsWith "SNAPSHOT") {
-    "Element Snapshots" at "http://maven.element.hr/nexus/content/repositories/snapshots/"
+    "Element Snapshots" at "http://repo.element.hr/nexus/content/repositories/snapshots/"
   }
   else {
-    "Element Releases" at "http://maven.element.hr/nexus/content/repositories/releases/"
+    "Element Releases" at "http://repo.element.hr/nexus/content/repositories/releases/"
   }
 ))
 
